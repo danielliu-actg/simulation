@@ -1,0 +1,41 @@
+python create_fake_data.py --vcf test.vcf --reference hg19.fasta --fms 330 --fstd 30 --rl 150 --rc 5000
+python create_fake_data.py --vcf test.vcf --reference hg19.fasta --fms 300 --fstd 30 --rl 150 --rc 5000 [20250212_chr1_798959_G_A] 
+python create_fake_data.py --vcf test.vcf --reference hg19.fasta --fms 280 --fstd 30 --rl 150 --rc 5000 [20250212_chr1_798959_G_A_2]
+python create_fake_data.py --vcf test.vcf --reference hg19.fasta --fms 280 --fstd 30 --rl 150 --rc 5000 [20250212_chr1_4396579_TG_T]
+
+[test simulation_v2]
+python create_fake_data.py --vcf test.vcf --reference hg19.fasta --fms 280 --fstd 30 --rl 150 --rc 5000 [test_simulation_v2]
+
+python create_fake_data_v2.py --vcf test.vcf --ref hg19.fasta --fsm normal --fms 280 --fstd 30 --rl 150 --rc 5000 --output 20250213_chr1_798959_G_A_normal
+python create_fake_data_v2.py --vcf test.vcf --ref hg19.fasta --fsm uniform --fmaxs 280 --fmin 280 --rl 150 --rc 5000 --output 20250213_chr1_798959_G_A_uniform
+
+
+
+python create_fake_data_v3.py --input test.tsv --ref hg19.fasta --fsm normal --fms 330  --fstd 50 --rl 150 --rc 5000 --output 20250214_fms330_fstd50
+python create_fake_data_v3.py --input test.tsv --ref hg19.fasta --fsm normal --fms 330  --fstd 50 --rl 150 --rc 5000 --output 20250214_fms330_fstd50_noerr
+
+python create_fake_data.py --input test.tsv --ref hg19.fasta --fsm normal --fms 330  --fstd 30 --rl 150 --rc 5000 --tmp_count 3 --tmp_shift 20 --output 20250218_fms330_fstd30_noerr 2>&1 | tee log
+
+python create_fake_data.py --input test.tsv --ref hg19.fasta --fsm normal --fms 330  --fstd 30 --rl 150 --rc 5000 --tmp_count 3 --tmp_shift 20 --output 20250219_fms330_fstd30 
+
+python create_fake_data.py --input test.vcf --ref hg19.fasta --fsm normal --fms 330  --fstd 30 --rl 150 --rc 5000 --tmp_count 3 --tmp_shift 20 --output 20250220_test_coord_parser
+
+python create_fake_data.py --input AmoyDx_BRCA_in-silco.tsv --ref hg19.fasta --fsm normal --fms 330  --fstd 30 --rl 150 --rc 500 --tmp_count 3 --tmp_shift 20 --output 20250224_AmoyDx_BRCA_in-silco
+
+python create_snv_mason_data.py --input test/test.vcf --ref /mnt/home/danielliu/02.testing_framework/source/genome/hg19.fasta --fsm normal --fms 330  --fstd 30 --rl 150 --rc 5000 --tmp_count 3 --tmp_shift 20 --output simulator_scripts_results/20250313
+
+python create_snv_mason_data.py --input test/test.vcf --ref_name hg19 --fsm normal --fms 330  --fstd 30 --rl 150 --rc 5000 --tmp_count 3 --tmp_shift 20 --output simulator_scripts_results/20250313-2
+
+
+python create_fusion_sandy_data.py --input test/fusion.tsv --fusiondb fusiongdb2 --rl 150 --rc 8000 --output simulator_scripts_results/20250314  
+python create_fusion_sandy_data.py --input test/fusion.tsv --fusiondb fusiongdb2 --rl 150 --rc 8000 --output simulator_scripts_results/20250314-2
+
+python create_snv_mason_data.py --input JIRA/ABIE-990/simulation_list.tsv --ref_name GRCh38 --fsm normal --fms 330  --fstd 30 --rl 150 --rc 10000 --tmp_count 3 --tmp_shift 20 --output simulator_scripts_results/20250324
+
+python create_snv_mason_data.py --input JIRA/ABIE-990/simulation_list.tsv --ref_name GRCh38 --fsm normal --fms 330  --fstd 30 --rl 150 --rc 10000 --tmp_count 3 --tmp_shift 20 --output simulator_scripts_results/20250407_header
+
+python create_fusion_sandy_data.py --input test/fusion.tsv --fusiondb fusiongdb2 --rl 150 --rc 8000 --output simulator_scripts_results/20250408_fusion
+
+
+docker run -i -v /mnt:/mnt  -w `pwd` --rm actgenomics/simulation:v1.0.0 python create_snv_mason_data.py --input JIRA/ABIE-990/simulation_list.tsv --ref_name GRCh38 --fsm normal --fms 330  --fstd 30 --rl 150 --rc 10000 --tmp_count 3 --tmp_shift 20 --output simulator_scripts_results/20250429
+docker run -i -v /mnt:/mnt  -w `pwd` --rm actgenomics/simulation:v1.0.0 python create_fusion_sandy_data.py --input test/fusion.tsv --fusiondb fusiongdb2 --rl 150 --rc 8000 --output simulator_scripts_results/20250429_fusion
