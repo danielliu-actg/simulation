@@ -14,7 +14,6 @@ ENV PATH=/opt/conda/envs/simulation/bin:/opt/conda/bin:$PATH
 
 # Copy necessary files
 COPY environment.yml /
-COPY seqan-main.zip /
 COPY Simulator.pm ./
 
 # Update apt source and install base packages
@@ -56,17 +55,16 @@ RUN cpanm --notest App::Sandy
 
 # Build SeqAn
 WORKDIR /tmp
-RUN unzip /seqan-main.zip && \
-    cd seqan-main && \
+RUN git clone https://github.com/seqan/seqan.git && \
+    cd seqan && \
     mkdir build && cd build && \
     cmake .. && \
     make -j$(nproc) && \
     cd / 
 
-    #rm -rf /tmp/seqan-main /seqan-main.zip
-RUN cp /tmp/seqan-main/build/bin/mason_* /opt/conda/envs/simulation/bin && \
+RUN cp /tmp/seqan/build/bin/mason_* /opt/conda/envs/simulation/bin && \
     cp /Simulator.pm /usr/local/lib/x86_64-linux-gnu/perl/5.34.0/App/Sandy && \
-    rm -rf /tmp/seqan-main /seqan-main.zip /environment.yml /Simulator.pm
+    rm -rf /tmp/seqan /environment.yml /Simulator.pm
 
 # Default command
 CMD ["/bin/bash"]
